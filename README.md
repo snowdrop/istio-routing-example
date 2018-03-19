@@ -1,6 +1,6 @@
 ## Purpose 
 
-Showcase Istio's Distributed Tracing capabilities with a set of properly instrumented Spring Boot applications
+Showcase Istio's A/B Testing capabilities with a set of example applications configured with appropriate routing and rules.
 
 ## Deploy on Minishift
 
@@ -12,11 +12,3 @@ Showcase Istio's Distributed Tracing capabilities with a set of properly instrum
     $ oc create -f rules/route-rule-redir.yml    
     $ open $(minishift openshift service istio-ingress -n istio-system --url)/suggest/
 ```
-
-The traces from the invocation of the two endpoints should look like the following:
-
-* Serial
-![](images/serial.jpg)
-
-* Parallel
-![](images/parallel.jpg)

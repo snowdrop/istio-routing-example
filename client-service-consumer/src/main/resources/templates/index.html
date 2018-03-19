@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Spring Boot Istio - A/B Testing</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous" />
+<style>
+hr {
+	border-top: 1px solid #8c8b8b;
+}
+</style>
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h2>Request Data</h2>
+
+				<button id="request-invoke" type="submit" class="btn btn-success">Invoke
+					Service</button>
+
+				<h3>Result:</h3>
+				<pre>
+					<code id="serial-result">Invoke the service to see results.</code>
+				</pre>
+			</div>
+		</div>
+
+		<hr />
+
+		<div class="row">
+			<div class="col-sm-12">
+				<h4>The responses from service A should be default. Service B
+					should only respond after activating the A/B test rule via Istio.</h4>
+			</div>
+		</div>
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+	<script th:inline="javascript">
+    $(document).ready(function () {
+        clickHandlerBinder("request");
+
+        function clickHandlerBinder(name) {
+            $("#" + name +"-invoke").click(function (e) {
+                $.getJSON("request-data", function (res) {
+                    $("#" + name + "-result").append("\n\n" + JSON.stringify(res, undefined, 2));
+                });
+                e.preventDefault();
+            });
+        }
+    });
+</script>
+</body>
+</html>

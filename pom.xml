@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.snowdrop</groupId>
-    <artifactId>istio-distributed-tracing-spring-boot</artifactId>
+    <groupId>me.snowdrop.booster</groupId>
+    <artifactId>istio-ab-testing-spring-boot</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -17,21 +17,13 @@
 
     <properties>
         <java.version>1.8</java.version>
-
         <fabric8-maven-plugin.version>3.5.34</fabric8-maven-plugin.version>
-
-        <opentracing-tracer.version>0.0.1-SNAPSHOT</opentracing-tracer.version>
-
-        <jaeger.endpoint.local>http://localhost:14268/api/traces</jaeger.endpoint.local>
-        <jaeger.endpoint.ocp>http://jaeger-collector.istio-system.svc:14268/api/traces</jaeger.endpoint.ocp>
-        <jaeger.endpoint>${jaeger.endpoint.local}</jaeger.endpoint>
     </properties>
 
     <modules>
-        <module>suggestion-service</module>
-        <module>album-service</module>
-        <module>album-details-service</module>
-        <module>store-service</module>
+        <module>client-service-consumer</module>
+        <module>service-a</module>
+        <module>service-b</module>
     </modules>
 
     <build>
