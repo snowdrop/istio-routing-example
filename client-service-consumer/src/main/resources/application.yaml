@@ -1,5 +1,5 @@
 server.port: ${client-service-consumer.port}
 
 service:
-  service-a:
-    name: ${service-a.endpoint}
+  my-service:
+    name: ${my-service.name}

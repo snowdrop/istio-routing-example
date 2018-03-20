@@ -14,7 +14,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<client-service-consumer.port>8090</client-service-consumer.port>
-		<service-a.endpoint>localhost:8091</service-a.endpoint>
+		<my-service.name>localhost:8091</my-service.name>
 	</properties>
 
 	<dependencies>
@@ -35,7 +35,7 @@
 			<id>openshift</id>
 			<properties>
 				<client-service-consumer.port>8080</client-service-consumer.port>
-				<service-a.endpoint>service-a:8080</service-a.endpoint>
+				<my-service.name>my-service:8080</my-service.name>
 			</properties>
 			<build>
 				<plugins>
@@ -58,7 +58,7 @@
 			<id>istio-openshift</id>
 			<properties>
 				<client-service-consumer.port>8080</client-service-consumer.port>
-				<service-a.endpoint>service-a:8080</service-a.endpoint>
+				<my-service.name>my-service:8080</my-service.name>
 				<fabric8.resourceDir>${basedir}/src/main/istio</fabric8.resourceDir>
 				<fabric8.mode>openshift</fabric8.mode>
 			</properties>
