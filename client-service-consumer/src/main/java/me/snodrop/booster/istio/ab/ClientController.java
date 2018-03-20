@@ -14,7 +14,7 @@ public class ClientController {
 
 	private final String serviceName;
 
-	public ClientController(RestTemplate restTemplate, @Value("${my-service.name}") String serviceName) {
+	public ClientController(RestTemplate restTemplate, @Value("${service.data.name}") String serviceName) {
 		this.restTemplate = restTemplate;
 		this.serviceName = serviceName;
 	}

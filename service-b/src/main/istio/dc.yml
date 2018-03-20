@@ -4,4 +4,6 @@ spec:
   triggers:
     # If we add these lines, then istio enricher will be able to include all the triggers !!!!!
     - type: ConfigChange
-
+labels:
+  version: b
+  app: my-service
