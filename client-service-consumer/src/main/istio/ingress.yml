@@ -8,11 +8,11 @@ spec:
   rules:
   - http:
       paths:
-      - path: /suggest
+      - path: /example
         backend:
           serviceName: ${project.artifactId}
           servicePort: 8080
-      - path: /suggest/.*
+      - path: /example/.*
         backend:
           serviceName: ${project.artifactId}
           servicePort: 8080

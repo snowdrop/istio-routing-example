@@ -1,6 +1,10 @@
 apiVersion: v1
 kind: Service
-name: my-service
+metadata:
+  name: my-service
+  labels:
+    version: b
+    app: my-service
 spec:
   ports:
     - name: http
@@ -9,6 +13,3 @@ spec:
       targetPort: 8080
   selector:
     app: my-service
-labels:
-  version: b
-  app: my-service

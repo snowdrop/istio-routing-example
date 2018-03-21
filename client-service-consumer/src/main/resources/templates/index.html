@@ -23,10 +23,11 @@ hr {
 
 				<button id="request-invoke" type="submit" class="btn btn-success">Invoke
 					Service</button>
+				<button id="clear-log" type="submit" class="btn btn-danger">Clear Log</button>
 
 				<h3>Result:</h3>
 				<pre>
-					<code id="serial-result">Invoke the service to see results.</code>
+					<code id="response-log"></code>
 				</pre>
 			</div>
 		</div>
@@ -48,17 +49,21 @@ hr {
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
 	<script th:inline="javascript">
-    $(document).ready(function () {
-        clickHandlerBinder("request");
+    $(function () {
+       $("#request-invoke").click(function (e) {
+           $.get("request-data", function (res) {
+               $("#response-log").append("\n" + JSON.stringify(res, undefined, 2));
+           });
+           e.preventDefault();
+       });
 
-        function clickHandlerBinder(name) {
-            $("#" + name +"-invoke").click(function (e) {
-                $.getJSON("request-data", function (res) {
-                    $("#" + name + "-result").append("\n\n" + JSON.stringify(res, undefined, 2));
-                });
-                e.preventDefault();
-            });
-        }
+       function resetLog() {
+          $("#response-log").text("Invoke the service to see results...\n");
+       }
+
+       $("#clear-log").click(resetLog);
+
+       resetLog();
     });
 </script>
 </body>

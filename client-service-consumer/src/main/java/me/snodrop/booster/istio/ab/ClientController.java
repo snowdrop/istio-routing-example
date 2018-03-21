@@ -20,10 +20,10 @@ public class ClientController {
 	}
 
 	@RequestMapping("/request-data")
-	public ServiceResponse serial() {
+	public String serial() {
 
-		final ServiceResponse response = restTemplate.getForObject(getURI(this.serviceName, "data"),
-				ServiceResponse.class);
+		final String response = restTemplate.getForObject(getURI(this.serviceName, "data"),
+				String.class);
 
 		return response;
 	}
