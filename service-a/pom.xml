@@ -80,20 +80,20 @@
 						</executions>
 						<configuration>
 							<profile>istio-spring-boot-profile</profile>
-							<resources>
-	                           <labels>
-	                               <pod>
-	                                   <property>
-	                                       <name>app</name>
-	                                       <value>my-service</value>
-	                                   </property>
-	                                   <property>
-	                                       <name>version</name>
-	                                       <value>a</value>
-	                                   </property>
-	                               </pod>
-	                           </labels>
-	                       </resources>
+                            <resources>
+                                <labels>
+                                    <all>
+                                        <property>
+                                            <name>app</name>
+                                            <value>my-service</value>
+                                        </property>
+                                        <property>
+                                            <name>version</name>
+                                            <value>a</value>
+                                        </property>
+                                    </all>
+                                </labels>
+                            </resources>
 						</configuration>
 					</plugin>
 				</plugins>
