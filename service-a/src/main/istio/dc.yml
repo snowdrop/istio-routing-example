@@ -1,9 +1,11 @@
 apiVersion: v1
 kind: DeploymentConfig
+metadata:
+  name: my-service-a
+  labels:
+    version: a
+    app: my-service
 spec:
   triggers:
     # If we add these lines, then istio enricher will be able to include all the triggers !!!!!
     - type: ConfigChange
-labels:
-  version: a
-  app: my-service
