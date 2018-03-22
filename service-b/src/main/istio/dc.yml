@@ -7,11 +7,6 @@ metadata:
     app: my-service
 spec:
   replicas: 1
-  template:
-    metadata:
-      labels:
-        app: my-service
-        version: b
   triggers:
     # If we add these lines, then istio enricher will be able to include all the triggers !!!!!
     - type: ConfigChange
