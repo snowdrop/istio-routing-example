@@ -80,7 +80,21 @@
 						</executions>
 						<configuration>
 							<profile>istio-spring-boot-profile</profile>
-						</configuration>
+                            <resources>
+                                <labels>
+                                    <all>
+                                        <property>
+                                            <name>app</name>
+                                            <value>my-service</value>
+                                        </property>
+                                        <property>
+                                            <name>version</name>
+                                            <value>b</value>
+                                        </property>
+                                    </all>
+                                </labels>
+                            </resources>
+                        </configuration>
 					</plugin>
 				</plugins>
 			</build>

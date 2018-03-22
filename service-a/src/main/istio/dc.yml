@@ -6,6 +6,7 @@ metadata:
     version: a
     app: my-service
 spec:
+  replicas: 1
   triggers:
     # If we add these lines, then istio enricher will be able to include all the triggers !!!!!
     - type: ConfigChange

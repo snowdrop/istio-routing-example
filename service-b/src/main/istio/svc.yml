@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: my-service
   labels:
-    version: b
     app: my-service
 spec:
   ports:
