@@ -8,9 +8,8 @@ spec:
   route:
     - labels:
         version: a
-        weight: 10
+      weight: 10
     - labels:
         version: b
-        weight: 90
+      weight: 90
         
-# https://github.com/ContainerSolutions/k8s-deployment-strategies/tree/master/ab-testing
