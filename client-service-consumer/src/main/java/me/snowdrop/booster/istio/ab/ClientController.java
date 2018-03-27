@@ -1,4 +1,4 @@
-package me.snodrop.booster.istio.ab;
+package me.snowdrop.booster.istio.ab;
 
 import java.net.URI;
 
