@@ -1,7 +1,7 @@
 # Profile containing Istio enricher
 # The istio-default profile is defined in the Istio enricher but is overridden here
 # we need to remove the fmp-project enricher that messes up labels and selectors
-- name: istio-default
+- name: default
   enricher:
     excludes:
     - fmp-project

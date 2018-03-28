@@ -35,22 +35,6 @@
 					<plugin>
 						<groupId>io.fabric8</groupId>
 						<artifactId>fabric8-maven-plugin</artifactId>
-						<configuration>
-                            <resources>
-                                <labels>
-                                    <all>
-                                        <property>
-                                            <name>app</name>
-                                            <value>my-service</value>
-                                        </property>
-                                        <property>
-                                            <name>version</name>
-                                            <value>b</value>
-                                        </property>
-                                    </all>
-                                </labels>
-                            </resources>
-                        </configuration>
 					</plugin>
 				</plugins>
 			</build>
