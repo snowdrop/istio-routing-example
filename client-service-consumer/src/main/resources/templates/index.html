@@ -51,7 +51,7 @@ hr {
 	<script th:inline="javascript">
     $(function () {
        $("#request-invoke").click(function (e) {
-           $.get("request-data", function (res) {
+           $.get("example/request-data", function (res) {
                $("#response-log").append("\n" + JSON.stringify(res, undefined, 2));
            });
            e.preventDefault();
