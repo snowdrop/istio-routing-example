@@ -19,8 +19,9 @@ First, create a new project on the cluster instance and grant service account pr
 
 ```bash
 oc new-project demo-istio
+# (manually change the policy field to disabled in configmap istio-inject in the istio-system namespace)
 oc label namespace demo-istio istio-injection=enabled
-(manually change the policy field to disabled in configmap istio-inject in the istio-system namespace)
+# (ensure Istio is accessible from a public URL)
 oc expose svc istio-ingress -n istio-system
 ```
 

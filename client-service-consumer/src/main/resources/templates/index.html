@@ -51,11 +51,18 @@ hr {
 	<script th:inline="javascript">
     $(function () {
        $("#request-invoke").click(function (e) {
-           $.get("request-data", function (res) {
+           $.get(createURL("request-data"), function (res) {
                $("#response-log").append("\n" + JSON.stringify(res, undefined, 2));
            });
            e.preventDefault();
        });
+
+       function createURL(name) {
+			if (window.location.href.endsWith("/")) {
+			  return name;
+			}
+			return "example/" + name;
+       }
 
        function resetLog() {
           $("#response-log").text("Invoke the service to see results...\n");
