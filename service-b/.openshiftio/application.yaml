@@ -8,7 +8,7 @@ metadata:
     openshift.io/display-name: Spring Boot - Istio Distributed Tracing
     openshift.io/provider-display-name: "Red Hat, Inc."
     description: >-
-      The Distributed Tracing Istio booster - suggestion service
+      The A/B Testing Istio booster - suggestion service
 parameters:
 - name: SOURCE_REPOSITORY_URL
   description: The source URL for the application
