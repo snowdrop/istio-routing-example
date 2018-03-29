@@ -36,12 +36,14 @@ oc create -f rules/client-route-rule.yml
 Finally, access the application via the istio-system istio-ingress application URL. Run this command to determine the appropriate URL to access our demo:
 
 ---For Minishift---
+
 ```bash
-echo $(minishift openshift service istio-ingress -n istio-system --url)/example/
+echo http://$(minishift openshift service istio-ingress -n istio-system --url)/example/
 ```
 ---For a hosted OpenShift cluster---
+
 ```bash
-echo $(oc get route istio-ingress -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
+echo http://$(oc get route istio-ingress -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
 ```
 Make sure you access the above url with the HTTP scheme. HTTPS is NOT enabled by default.
 
