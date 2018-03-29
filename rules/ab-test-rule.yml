@@ -8,8 +8,8 @@ spec:
   route:
     - labels:
         version: a
-      weight: 10
+      weight: 100
     - labels:
         version: b
-      weight: 90
+      weight: 0
         
