@@ -67,16 +67,6 @@
 						</executions>
 						<configuration>
 							<skip>${skip.fmp}</skip>
-							<!--<resources>-->
-								<!--<annotations>-->
-									<!--<deployment>-->
-										<!--<property>-->
-											<!--<name>sidecar.istio.io/inject</name>-->
-											<!--<value>true</value>-->
-										<!--</property>-->
-									<!--</deployment>-->
-								<!--</annotations>-->
-							<!--</resources>-->
 						</configuration>
 					</plugin>
 				</plugins>
