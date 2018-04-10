@@ -35,26 +35,22 @@ oc create -f rules/client-route-rule.yml
 Finally, access the application via the istio-system istio-ingress application URL. Run this command to determine the appropriate URL to access our demo:
 
 ---For Minishift---
-<<<<<<< HEAD
 
 ```bash
 echo http://$(minishift openshift service istio-ingress -n istio-system --url)/example/
 ```
 ---For a hosted OpenShift cluster---
 
-=======
->>>>>>> f03808b6faff7fdf3fc55f99d918f8cc095f05e7
 ```bash
 echo http://$(oc get route istio-ingress -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
 ```
-<<<<<<< HEAD
+
 Make sure you access the above url with the HTTP scheme. HTTPS is NOT enabled by default.
-=======
+
 ---For a hosted OpenShift cluster---
 ```bash
 echo $(oc get route istio-ingress -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
 ```
->>>>>>> f03808b6faff7fdf3fc55f99d918f8cc095f05e7
 
 Click "Invoke Service" in the client UI; do this several times. You will notice that the services are currently load-balanced at exactly 50%. This is not always desireable for an A/B deployment. Sometimes it is important to slowly direct traffic to a new service over time. In this case, we can supply an Istio RouteRule to control load balancing behavior:
 
