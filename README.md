@@ -1,4 +1,4 @@
-## Purpose 
+## Purpose
 
 This booster showcases using Istio's A/B Testing capabilities with a set of example applications configured with appropriate routing and rules.
 
@@ -40,17 +40,12 @@ Finally, access the application via the istio-system istio-ingress application U
 echo http://$(minishift openshift service istio-ingress -n istio-system --url)/example/
 ```
 ---For a hosted OpenShift cluster---
+Make sure you access the url with the HTTP scheme. HTTPS is NOT enabled by default.
 
 ```bash
 echo http://$(oc get route istio-ingress -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
 ```
 
-Make sure you access the above url with the HTTP scheme. HTTPS is NOT enabled by default.
-
----For a hosted OpenShift cluster---
-```bash
-echo $(oc get route istio-ingress -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
-```
 
 Click "Invoke Service" in the client UI; do this several times. You will notice that the services are currently load-balanced at exactly 50%. This is not always desireable for an A/B deployment. Sometimes it is important to slowly direct traffic to a new service over time. In this case, we can supply an Istio RouteRule to control load balancing behavior:
 
