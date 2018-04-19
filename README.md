@@ -1,6 +1,6 @@
 # Description
 
-This booster showcases using Istio's A/B Testing capabilities with a set of example applications configured with appropriate routing and rules.
+This booster showcases using Istio's dynamic traffic routing capabilities with a set of example applications designed to simulate a real-world scenario.
 
 The primary objectives are:
  * Deploy a client UI application (client-service-consumer) and a load-balanced service (my-service) with two pods running different implementations (versions): service-a, and service-b.
@@ -10,11 +10,15 @@ The primary objectives are:
 
 # User Problem
 
-In a microservice topology (MST), the problem of managing upgrades and rollouts of new functionality, or optimizing and incrementally testing alternate implementations becomes increasingly complex due to the increased complexity of the system as a whole. E.g. The more services participate in a microservices architecture, the most likely it will be that services will need to be independently upgraded and patched - this results in parts of the microservice architecture being unavailable unless traffic can be routed to alternate endpoints dynamically. The operations processes required to take down the entire system are not practical for systems beyond a simple design.
+In a microservice topology (MST), a/b type deployments are useful for managing and mitigating a number of scenarios.
 
-During upgrades/rollouts of any given individual service in an MST, the goal of an A/B deployment (or A/B test) is to deploy two versions (A and B) of a service in parallel, then divert traffic either incrementally or via a cutover to the new version of the service once it becomes fully available. The older version remains running in case of deployment failure, and traffic can be restored to its original pattern if errors are detected.
+The problem of managing upgrades and rollouts of new functionality, for example, becomes increasingly complex due to the increased complexity of a microservices-based. E.g. The more services that participate in the architecture, the most likely it will be that services will need to be independently upgraded and patched - this results in parts of the system being unavailable unless traffic can be routed to alternate endpoints dynamically. The operations processes required to take down the entire system are not practical for systems beyond a simple design. By using A/B deployments, however, this risk can be controlled.
+
+During upgrades/rollouts of any given individual service in an MST, the goal of an A/B deployment is to serve two versions (A and B) of a service in parallel, then divert traffic either incrementally or via a hard-cutover to the new version of the service once it becomes fully available. The older version remains running in case of deployment failure, and traffic can be restored to its original pattern if errors are detected.
 
 There are several benefits to this integration/deployment pattern. This prevents outage windows, and makes avoiding “the all night deployment” possible because updates can more reliably occur during normal working hours without disrupting system function. Due to the ease with which traffic can be re-routed, A/B routing also helps limit the duration of outages due to system failure that would traditionally only be restored by rolling back the newly deployed service to the prior version entirely.
+
+A/B testing is another example where A/B deployments and dynamic traffic routing are useful. A/B tests are used to validate a hypothesis (for performance, customer conversions, or stability, etc). Two versions of a service are again deployed in parallel, then the effectiveness of each is measured to decide which service meets the goals more effectively. The lesser effective service is eventually scaled down, and the more effective service scaled up to handle 100% of the load over time.
 
 # Concepts and Architectural Patterns
 
