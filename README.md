@@ -36,8 +36,9 @@ mvn clean package fabric8:deploy -Popenshift
 ```bash
     find . | grep openshiftio | grep application | xargs -n 1 oc apply -f
 
-    oc new-app --template=spring-boot-istio-distributed-tracing-booster-greeting-service -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-distributed-tracing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=greeting-service
-    oc new-app --template=spring-boot-istio-distributed-tracing-booster-cutename-service -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-distributed-tracing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=cutename-service
+    oc new-app --template=spring-boot-istio-ab-tests-booster-client-service-consumer -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=client-service-consumer
+    oc new-app --template=spring-boot-istio-ab-tests-booster-service-a -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=service-a
+    oc new-app --template=spring-boot-istio-ab-tests-booster-service-b -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=service-b
 ```
 
 ## Expose the application UI for HTTP traffic
