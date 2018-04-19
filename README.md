@@ -30,7 +30,7 @@ There are several benefits to this integration/deployment pattern. This prevents
 * Developer has installed Istio 0.7.0 onto the Minishift/OpenShift instance.
 * Developer is logged in to Minishift/OpenShift with the Admin user.
 
-## Use Case
+# Use Case
 
 First, create a new project on the cluster instance and grant service account privileges enabling its pods to access features not available to normal (restricted) pods. Then ensure that the istio-ingress service has been exposed --- this enables us to access our applications via the Istio system, and is the first step to using Istio in any project with externally facing services.
 
