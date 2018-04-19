@@ -50,7 +50,7 @@ oc create -f rules/client-route-rule.yml
 
 ## Access the example application
 
-Finally, access the application via the istio-system istio-ingress application URL. Run this command to determine the appropriate URL to access our demo:
+Finally, access the application via the istio-system istio-ingress application URL. Run this command to determine the appropriate URL to access our demo. Make sure you access the url with the HTTP scheme. HTTPS is NOT enabled by default:
 
 ### For Minishift
 
@@ -58,7 +58,6 @@ Finally, access the application via the istio-system istio-ingress application U
 echo http://$(minishift openshift service istio-ingress -n istio-system --url)/example/
 ```
 ### For a hosted OpenShift cluster
-Make sure you access the url with the HTTP scheme. HTTPS is NOT enabled by default.
 
 ```bash
 echo http://$(oc get route istio-ingress -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
