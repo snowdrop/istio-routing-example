@@ -24,28 +24,49 @@ oc label namespace demo-istio istio-injection=enabled
 oc expose svc istio-ingress -n istio-system
 ```
 
+### Build locally using Fabric8 Maven Plugin
+
 Next, build and deploy the application using the Fabric8 Maven Plugin (FMP). Configuration for the FMP may be found both in pom.xml and `src/main/fabric8` files/folders. This configuration is used to define service names and deployments that control how pods are labeled/versioned on the OpenShift cluster. Labels and versions are key concepts for creating A/B testing or multi-versioned pods in a service.
+
+```bash
+mvn clean package fabric8:deploy -Popenshift
+```
+
+### Build on OpenShift using s2i
+```bash
+    find . | grep openshiftio | grep application | xargs -n 1 oc apply -f
+
+    oc new-app --template=spring-boot-istio-distributed-tracing-booster-greeting-service -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-distributed-tracing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=greeting-service
+    oc new-app --template=spring-boot-istio-distributed-tracing-booster-cutename-service -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-distributed-tracing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=cutename-service
+```
+
+## Expose the application UI for HTTP traffic
 
 Create a route rule to properly forward traffic to the demo application. This is only necessary if your application accepts traffic at a different port/url than the default. In this case, our application accepts traffic at '/', but we will access it with the path '/example'.
 
 ```bash
-mvn clean package fabric8:deploy -Popenshift
 oc create -f rules/client-route-rule.yml  
 ```
+
+## Access the example application
+
 Finally, access the application via the istio-system istio-ingress application URL. Run this command to determine the appropriate URL to access our demo:
 
----For Minishift---
+### For Minishift
 
 ```bash
 echo http://$(minishift openshift service istio-ingress -n istio-system --url)/example/
 ```
----For a hosted OpenShift cluster---
+### For a hosted OpenShift cluster
 Make sure you access the url with the HTTP scheme. HTTPS is NOT enabled by default.
 
 ```bash
 echo http://$(oc get route istio-ingress -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
 ```
 
+## Understand the example
+
+Now it's time to take a look at what this application does, and how it works.
 
 Click "Invoke Service" in the client UI; do this several times. You will notice that the services are currently load-balanced at exactly 50%. This is not always desireable for an A/B deployment. Sometimes it is important to slowly direct traffic to a new service over time. In this case, we can supply an Istio RouteRule to control load balancing behavior:
 
