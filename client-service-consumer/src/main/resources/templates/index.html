@@ -17,6 +17,23 @@ hr {
 <body>
 
 	<div class="container">
+
+		  <div class="row">
+		    <h1>Istio Routing Mission - Spring Boot</h1>
+		    <p class="lead">
+		        This mission showcases the usage of Istio routing to create A/B testing functionality, blue/green deployments for production releases, or simple load balancing.
+		    </p>
+		    <p>
+					In a microservice topology (MST), the problem of managing upgrades and rollouts of new functionality, or optimizing and incrementally testing alternate implementations becomes increasingly complex due to the increased complexity of the system as a whole. E.g. The more services participate in a microservices architecture, the most likely it will be that services will need to be independently upgraded and patched - this results in parts of the microservice architecture being unavailable unless traffic can be routed to alternate endpoints dynamically. The operations processes required to take down the entire system are not practical for systems beyond a simple design.
+				</p>
+				<p>
+				 During upgrades/rollouts of any given individual service in an MST, the goal of an A/B deployment (or A/B test) is to deploy two versions (A and B) of a service in parallel, then divert traffic either incrementally or via a cutover to the new version of the service once it becomes fully available. The older version remains running in case of deployment failure, and traffic can be restored to its original pattern if errors are detected.
+				</p>
+		    <p>
+		      Here we'll learn how to integrate routing into an Istio / Spring Boot application, using RouteRules and multiple deployments of a service.
+		    </p>
+		    <hr />
+		  </div>
 		<div class="row">
 			<div class="col-sm-12">
 				<h2>Request Data</h2>
@@ -37,23 +54,26 @@ hr {
 		<div class="row">
 			<div class="col-sm-12">
 				<h1>Instructions</h1>
-				<h4>The responses from service A and be  B should be balanced by default at 50% by the Kubernetes cluster.</h4>
+		    <p>
+		        Please reference the mission documentation or <a href="https://github.com/snowdrop/spring-boot-istio-distributed-tracing-booster/blob/master/README.md">README</a> for next steps and instructions.
+		    </p>
+				<h4>View the defaults</h4>
 				<p>
-					Click "Invoke Service" in the client UI; do this several times. You will notice that the services are currently load-balanced at exactly 50%. This is not always desirable for an A/B deployment. Sometimes it is important to slowly direct traffic to a new service over time. In this case, we can supply an Istio RouteRule to control load balancing behavior:
+					Click "Invoke Service" in the client UI; do this several times. You will notice that the services are currently load-balanced at exactly 50%. The responses from service A and be B should be balanced by default at 50% by the Kubernetes cluster. This is not always desirable for an A/B deployment. Sometimes it is important to slowly direct traffic to a new service over time. In this case, we can supply an Istio RouteRule to control load balancing behavior.
 				</p>
 				<h4>Apply a custom Istio RouteRule to control load balancing behavior.</h4>
-				<p>Log in to your project's namespace, and run the following command from your CLI:</p>
+				<p>Log in to your project's namespace, navigate to the mission source code on your local environment, and run the following command from your CLI:</p>
 				<pre>oc create -f rules/ab-test-rule.yml</pre>
 				<p>
-
-Note that the RouteRule defined in the file above uses labels "a" and "b" to identify each unique version of the service. If multiple services match any of these labels, traffic will be divided between them accordingly. Additional routes/weights can be supplied using additional labels/service versions as desired.
-</p>
-<p>
-Click "Invoke Service" in the client UI; do this several times. You will notice that traffic is no longer routed at 50/50%, and more traffic is directed to service version B than service version A. Adjust the weights in the rule-file and re-run the command above (use new weights of your choice). You should see traffic adjust accordingly. Rules may take a few seconds to be updated in the Istio-system.
-</p>
-<h4>Conclusion</h4>
-<p>
-Congratulations! You now know how to direct traffic between different versions of a service using Istio RouteRules.
+					Note that the RouteRule defined in the file above uses labels "a" and "b" to identify each unique version of the service. If multiple services match any of these labels, traffic will be divided between them accordingly. Additional routes/weights can be supplied using additional labels/service versions as desired.
+				</p>
+				<h4>View the load-balanced behavior</h4>
+				<p>
+					Click "Invoke Service" in the client UI; do this several times. You will notice that traffic is no longer routed at 50/50%, and more traffic is directed to service version B than service version A. Adjust the weights in the rule-file and re-run the command above (use new weights of your choice). You should see traffic adjust accordingly. Rules may take a few seconds to be updated in the Istio-system.
+				</p>
+				<h4>Conclusion</h4>
+				<p>
+					Congratulations! You now know how to direct traffic between different versions of a service using Istio RouteRules. This feature may be applied for any number of routing needs.
 				</p>
 			</div>
 		</div>
