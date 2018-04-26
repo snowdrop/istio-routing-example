@@ -99,3 +99,23 @@ Do this several times. You will notice that traffic is no longer routed at 50/50
 NOTE: It could take several seconds for the RouteRule to be detected and applied by Istio.
 
 Congratulations! You now know how to direct traffic between different versions of a service using Istio RouteRules.
+
+= Undeploy the application
+
+=== With Fabric8 Maven Plugin (FMP)
+```bash
+mvn fabric8:undeploy
+```
+
+=== With Source to Image build (S2I)
+```bash
+oc delete all --all
+oc delete ingress --all
+find . | grep openshiftio | grep application | xargs -n 1 oc delete -f
+```
+
+= Remove the namespace
+This will delete the project from the OpenShift cluster
+```bash
+oc delete project istio-security
+```
