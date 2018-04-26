@@ -1,0 +1,28 @@
+metadata:
+  labels:
+    version: a
+    app: spring-boot-istio-routing-service
+  name: spring-boot-istio-routing-service-a
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: 'true'
+      labels:
+        app: spring-boot-istio-routing-service
+        version: a
+    spec:
+      containers:
+      - image: spring-boot-istio-routing-service-a:latest
+        imagePullPolicy: Always
+        name: spring-boot
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - spring-boot
+      from:
+        kind: ImageStreamTag
+        name: spring-boot-istio-routing-service-a:latest
+    type: ImageChange

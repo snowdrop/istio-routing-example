@@ -1,5 +1,6 @@
-= Purpose
+= Istio Routing Mission
 
+== Purpose
 Showcases Istio's dynamic routing capabilities with a minimal set of example applications.
 
 == Prerequisites
@@ -18,7 +19,7 @@ NOTE: The `istiooc cluster up --istio=true` command from https://github.com/open
 == Environment preparation
 
 ```bash
-    oc new-project istio-mutual-tls
+    oc new-project routing-mission
 ```
 *CAUTION*:
 In order for Istio automatic sidecar injection to work properly the following Istio configuration needs to be in place:
@@ -49,9 +50,9 @@ Run the following commands to apply and execute the OpenShift templates that wil
 ```bash
 find . | grep openshiftio | grep application | xargs -n 1 oc apply -f
 
-oc new-app --template=spring-boot-istio-ab-tests-booster-client-service-consumer -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=client-service-consumer
-oc new-app --template=spring-boot-istio-ab-tests-booster-service-a -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=service-a
-oc new-app --template=spring-boot-istio-ab-tests-booster-service-b -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=service-b
+oc new-app --template=spring-boot-istio-routing-booster-client -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-client
+oc new-app --template=spring-boot-istio-routing-booster-service-a -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-service-a
+oc new-app --template=spring-boot-istio-routing-booster-service-b -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-service-b
 ```
 
 = Use Cases
@@ -73,7 +74,7 @@ Run the following command to determine the appropriate URL to access our demo. M
 echo http://$(oc get route istio-ingress -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
 ```
 +
-The result of the above command is the istio-system istio-ingress URL, appended with the RouteRule path.
+The result of the above command is the istio-system istio-ingress URL, appended with the RouteRule path. Open this URL in your a web browser.
 
 == Transfer load between two versions of an application/service
 
@@ -87,7 +88,7 @@ Sometimes it is important to slowly direct traffic to a new service over time, o
 Run the following command:
 +
 ```bash
-oc create -f rules/ab-test-rule.yml
+oc create -f rules/load-balancing-rule.yml
 ```
 +
 The RouteRule defined in the file above uses labels "a" and "b" to identify each unique version of the service. If multiple services match any of these labels, traffic will be divided between them accordingly. Additional routes/weights can be supplied using additional labels/service versions as desired.
