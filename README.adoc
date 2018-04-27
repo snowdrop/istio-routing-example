@@ -1,36 +1,34 @@
-= Purpose
+= Istio Routing Mission
 
+== Purpose
 Showcases Istio's dynamic routing capabilities with a minimal set of example applications.
 
 == Prerequisites
+. Openshift 3.9 cluster
+. Istio 0.7.1 with authentication installed on the aforementioned cluster. To install Istio simply follow one of the following docs:
+.. https://istio.io/docs/setup/kubernetes/quick-start.html
+.. https://istio.io/docs/setup/kubernetes/ansible-install.html
+. Enable automatic sidecar injection for Istio (See https://istio.io/docs/setup/kubernetes/sidecar-injection.html[this] for details)
++
+In order for Istio automatic sidecar injection to work properly, the following Istio configuration needs to be in place:
++
+.. The `policy` field is set to `disabled` in the `istio-inject` configmap  of the `istio-system` namespace.
+.. The `istio-sidecar-injector` `MutatingWebhookConfiguration` should not limit the injection to properly labeled namespaces
 
-- Openshift 3.9 cluster
-- Istio 0.7.1 with authentication installed on the aforementioned cluster.
-To install Istio simply follow one of the following docs:
-    * https://istio.io/docs/setup/kubernetes/quick-start.html
-    * https://istio.io/docs/setup/kubernetes/ansible-install.html
-- Enable automatic sidecar injection for Istio
-  * See https://istio.io/docs/setup/kubernetes/sidecar-injection.html[this] for details
-- Login to the cluster with the admin user
-
-NOTE: The `istiooc cluster up --istio=true` command from https://github.com/openshift-istio/origin/releases/[this project] perfectly satisfy the above requirements.
-
-== Environment preparation
-
-```bash
-    oc new-project istio-mutual-tls
-```
-*CAUTION*:
-In order for Istio automatic sidecar injection to work properly the following Istio configuration needs to be in place:
-
-. The `policy` field is set to `disabled` in the `istio-inject` configmap  of the `istio-system` namespace
-. The `istio-sidecar-injector` `MutatingWebhookConfiguration` should not limit the injection to properly labeled namespaces
-. Expose services and Istio ingress
+. Expose services and Istio ingress:
 +
 ```
 oc expose svc istio-ingress -n istio-system
 ```
-The aforementioned configuration is not needed when the cluster has been setup using `istiooc`
+. Login to the cluster with the admin user
+
+== Environment preparation
+
+Create a new project/namespace on the cluster. This is where your application will be deployed.
+
+```bash
+oc new-project <whatever valid project name you want>
+```
 
 == Build and deploy the application
 
@@ -49,9 +47,9 @@ Run the following commands to apply and execute the OpenShift templates that wil
 ```bash
 find . | grep openshiftio | grep application | xargs -n 1 oc apply -f
 
-oc new-app --template=spring-boot-istio-ab-tests-booster-client-service-consumer -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=client-service-consumer
-oc new-app --template=spring-boot-istio-ab-tests-booster-service-a -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=service-a
-oc new-app --template=spring-boot-istio-ab-tests-booster-service-b -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-ab-testing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=service-b
+oc new-app --template=spring-boot-istio-routing-booster-client -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-routing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-client
+oc new-app --template=spring-boot-istio-routing-booster-service-a -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-routing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-service-a
+oc new-app --template=spring-boot-istio-routing-booster-service-b -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-routing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-service-b
 ```
 
 = Use Cases
@@ -73,7 +71,7 @@ Run the following command to determine the appropriate URL to access our demo. M
 echo http://$(oc get route istio-ingress -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
 ```
 +
-The result of the above command is the istio-system istio-ingress URL, appended with the RouteRule path.
+The result of the above command is the istio-system istio-ingress URL, appended with the RouteRule path. Open this URL in your a web browser.
 
 == Transfer load between two versions of an application/service
 
@@ -87,7 +85,7 @@ Sometimes it is important to slowly direct traffic to a new service over time, o
 Run the following command:
 +
 ```bash
-oc create -f rules/ab-test-rule.yml
+oc create -f rules/load-balancing-rule.yml
 ```
 +
 The RouteRule defined in the file above uses labels "a" and "b" to identify each unique version of the service. If multiple services match any of these labels, traffic will be divided between them accordingly. Additional routes/weights can be supplied using additional labels/service versions as desired.
@@ -98,3 +96,23 @@ Do this several times. You will notice that traffic is no longer routed at 50/50
 NOTE: It could take several seconds for the RouteRule to be detected and applied by Istio.
 
 Congratulations! You now know how to direct traffic between different versions of a service using Istio RouteRules.
+
+== Undeploy the application
+
+=== With Fabric8 Maven Plugin (FMP)
+```bash
+mvn fabric8:undeploy
+```
+
+=== With Source to Image build (S2I)
+```bash
+oc delete all --all
+oc delete ingress --all
+find . | grep openshiftio | grep application | xargs -n 1 oc delete -f
+```
+
+=== Remove the namespace
+This will delete the project from the OpenShift cluster
+```bash
+oc delete project <your project name>
+```

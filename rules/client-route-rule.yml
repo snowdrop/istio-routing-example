@@ -4,7 +4,7 @@ metadata:
   name: client-redir
 spec:
   destination:
-    name: client-service-consumer
+    name: spring-boot-istio-routing-client
   match:
     request:
       headers:
