@@ -16,10 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<fabric8-maven-plugin.version>3.5.34</fabric8-maven-plugin.version>
-		<version.fmp-istio-enricher>0.2-SNAPSHOT</version.fmp-istio-enricher>
-		<version.kubernetes-model>2.0.4</version.kubernetes-model>
-    <skip.fmp>true</skip.fmp>
+        <skip.fmp>true</skip.fmp>
 	</properties>
 
 	<modules>
