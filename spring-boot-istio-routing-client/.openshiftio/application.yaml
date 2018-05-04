@@ -81,11 +81,7 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-<<<<<<< HEAD:spring-boot-istio-routing-client/.openshiftio/application.yaml
-        name: spring-boot-istio-routing-client:latest
-=======
-        name: client-service-consumer:BOOSTER_VERSION
->>>>>>> fe744ac... Replace hardcoded versions by tokens.:client-service-consumer/.openshiftio/application.yaml
+        name: spring-boot-istio-routing-client:BOOSTER_VERSION
     postCommit: {}
     resources: {}
     source:
@@ -97,11 +93,7 @@ objects:
       sourceStrategy:
         from:
           kind: ImageStreamTag
-<<<<<<< HEAD:spring-boot-istio-routing-client/.openshiftio/application.yaml
-          name: runtime-client:1.2
-=======
-          name: runtime-client-consumer:RUNTIME_VERSION
->>>>>>> fe744ac... Replace hardcoded versions by tokens.:client-service-consumer/.openshiftio/application.yaml
+          name: runtime-client:RUNTIME_VERSION
         incremental: true
         env:
         - name: MAVEN_ARGS_APPEND
@@ -177,11 +169,7 @@ objects:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-<<<<<<< HEAD:spring-boot-istio-routing-client/.openshiftio/application.yaml
-          image: spring-boot-istio-routing-client:latest
-=======
-          image: client-service-consumer:BOOSTER_VERSION
->>>>>>> fe744ac... Replace hardcoded versions by tokens.:client-service-consumer/.openshiftio/application.yaml
+          image: spring-boot-istio-routing-client:BOOSTER_VERSION
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
@@ -216,9 +204,5 @@ objects:
         - spring-boot
         from:
           kind: ImageStreamTag
-<<<<<<< HEAD:spring-boot-istio-routing-client/.openshiftio/application.yaml
-          name: spring-boot-istio-routing-client:latest
-=======
-          name: client-service-consumer:BOOSTER_VERSION
->>>>>>> fe744ac... Replace hardcoded versions by tokens.:client-service-consumer/.openshiftio/application.yaml
+          name: spring-boot-istio-routing-client:BOOSTER_VERSION
       type: ImageChange
