@@ -37,7 +37,7 @@ The aforementioned configuration is not needed when the cluster has been setup u
 === With Fabric8 Maven Plugin (FMP)
 Execute the following command to build the project and deploy it to OpenShift:
 ```bash
-mvn clean package fabric8:deploy -Popenshift
+mvn clean fabric8:deploy -Popenshift
 ```
 Configuration for FMP may be found both in pom.xml and `src/main/fabric8` files/folders.
 
