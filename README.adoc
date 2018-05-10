@@ -18,7 +18,7 @@ NOTE: The `istiooc cluster up --istio=true` command from https://github.com/open
 == Environment preparation
 
 ```bash
-    oc new-project istio-mutual-tls
+    oc new-project <whatever valid project name you want>
 ```
 *CAUTION*:
 In order for Istio automatic sidecar injection to work properly the following Istio configuration needs to be in place:
