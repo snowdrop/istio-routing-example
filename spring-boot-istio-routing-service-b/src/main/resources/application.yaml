@@ -1,0 +1,1 @@
+server.port: ${spring-boot-istio-routing-service-b.port}
