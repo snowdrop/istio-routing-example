@@ -17,6 +17,26 @@ spec:
       - image: service-b:latest
         imagePullPolicy: Always
         name: spring-boot
+        livenessProbe:
+          failureThreshold: 2
+          initialDelaySeconds: 60
+          periodSeconds: 3
+          successThreashold: 1
+          timeoutSeconds: 1
+          exec:
+            command:
+            - curl
+            - http://localhost:8080/health
+        readinessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreashold: 1
+          timeoutSeconds: 1
+          exec:
+            command:
+            - curl
+            - http://localhost:8080/health
   triggers:
   - imageChangeParams:
       automatic: true
