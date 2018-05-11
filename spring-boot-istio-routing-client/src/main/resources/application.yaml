@@ -1,0 +1,9 @@
+server.port: ${spring-boot-istio-routing-client.port}
+
+service:
+  data:
+    name: ${spring-boot-istio-routing-service.endpoint}
+
+logging:
+  level:
+    org.springframework.web: DEBUG
