@@ -1,9 +1,0 @@
-server.port: ${client-service-consumer.port}
-
-service:
-  data:
-    name: ${my-service.endpoint}
-
-logging:
-  level:
-    org.springframework.web: DEBUG
