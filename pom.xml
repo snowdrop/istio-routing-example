@@ -3,29 +3,26 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>me.snowdrop.booster</groupId>
-	<artifactId>istio-ab-testing-spring-boot</artifactId>
-	<version>1.5.12-3-SNAPSHOT</version>
-	<packaging>pom</packaging>
-
 	<parent>
 		<groupId>io.openshift.booster</groupId>
 		<artifactId>spring-boot-booster-parent</artifactId>
-		<version>1.5.10-6</version>
+		<version>1.5.12-3</version>
 	</parent>
+
+	<groupId>io.openshift.booster</groupId>
+	<artifactId>spring-boot-istio-routing-parent</artifactId>
+	<version>1.5.12-3-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<fabric8-maven-plugin.version>3.5.34</fabric8-maven-plugin.version>
-		<version.fmp-istio-enricher>0.2-SNAPSHOT</version.fmp-istio-enricher>
-		<version.kubernetes-model>2.0.4</version.kubernetes-model>
         <skip.fmp>true</skip.fmp>
 	</properties>
 
 	<modules>
-		<module>client-service-consumer</module>
-		<module>service-a</module>
-		<module>service-b</module>
+		<module>spring-boot-istio-routing-client</module>
+		<module>spring-boot-istio-routing-service-a</module>
+		<module>spring-boot-istio-routing-service-b</module>
 	</modules>
 
 	<build>

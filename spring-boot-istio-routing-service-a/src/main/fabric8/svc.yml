@@ -1,0 +1,12 @@
+metadata:
+  name: spring-boot-istio-routing-service
+  labels:
+    app: spring-boot-istio-routing-service
+spec:
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: spring-boot-istio-routing-service
