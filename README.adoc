@@ -72,7 +72,7 @@ oc new-app --template=spring-boot-istio-routing-booster-service-b -p SOURCE_REPO
 This is only necessary if your application accepts traffic at a different port/url than the default. In this case, our application accepts traffic at `/`, but we will access it with the path `/example`.
 +
 ```bash
-oc create -f rules/client-route-rule.yml
+oc apply -f rules/client-route-rule.yml
 ```
 
 . Access the application
@@ -97,7 +97,7 @@ Sometimes it is important to slowly direct traffic to a new service over time, o
 Run the following command:
 +
 ```bash
-oc create -f rules/load-balancing-rule.yml
+oc apply -f rules/load-balancing-rule.yml
 ```
 +
 The RouteRule defined in the file above uses labels "a" and "b" to identify each unique version of the service. If multiple services match any of these labels, traffic will be divided between them accordingly. Additional routes/weights can be supplied using additional labels/service versions as desired.
