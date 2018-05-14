@@ -17,7 +17,6 @@ In order for Istio automatic sidecar injection to work properly, the following I
 
 . Expose services and Istio ingress:
 +
-```
 *CAUTION*:
 In order for Istio automatic sidecar injection to work properly the following Istio configuration needs to be in place:
 
