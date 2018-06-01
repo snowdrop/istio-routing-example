@@ -17,7 +17,11 @@
 	<properties>
 		<java.version>1.8</java.version>
         <skip.fmp>true</skip.fmp>
-	</properties>
+	  <arquillian.version>1.4.0.Final</arquillian.version>
+    <junit.version>4.12</junit.version>
+    <spring-boot-bom.version>1.5.13.Final</spring-boot-bom.version>
+    <spring-boot.version>1.5.13.RELEASE</spring-boot.version>
+  </properties>
 
 	<modules>
 		<module>spring-boot-istio-routing-client</module>
