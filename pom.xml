@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>io.openshift.booster</groupId>
-		<artifactId>spring-boot-booster-parent</artifactId>
-		<version>1.5.13-2</version>
+		<groupId>io.openshift</groupId>
+		<artifactId>booster-parent</artifactId>
+		<version>22</version>
 	</parent>
 
 	<groupId>io.openshift.booster</groupId>
@@ -17,7 +17,60 @@
 	<properties>
 		<java.version>1.8</java.version>
         <skip.fmp>true</skip.fmp>
-	</properties>
+	  <arquillian.version>1.4.0.Final</arquillian.version>
+    <spring-boot-bom.version>1.5.13.Final</spring-boot-bom.version>
+    <spring-boot.version>1.5.13.RELEASE</spring-boot.version>
+    <awaitility.version>1.7.0</awaitility.version>
+    <rest-assured.version>2.9.0</rest-assured.version>
+  </properties>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>me.snowdrop</groupId>
+        <artifactId>spring-boot-bom</artifactId>
+        <version>${spring-boot-bom.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-bom</artifactId>
+        <version>${arquillian.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.jayway.restassured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>${rest-assured.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.jayway.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <version>${awaitility.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
 	<modules>
 		<module>spring-boot-istio-routing-client</module>
@@ -26,6 +79,12 @@
 	</modules>
 
 	<build>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -43,10 +102,41 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>
+	  <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring-boot.version}</version>
+          <configuration>
+            <classifier>exec</classifier>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 
 
-	<profiles>
+	<profiles>		
 		<profile>
 			<id>openshift</id>
 			<build>
@@ -69,6 +159,17 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+      <id>openshift-it</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
 	</profiles>
 
 	<repositories>
