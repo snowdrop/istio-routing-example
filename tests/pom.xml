@@ -5,7 +5,7 @@
   <parent>
     <artifactId>spring-boot-istio-routing-parent</artifactId>
     <groupId>io.openshift.booster</groupId>
-    <version>1.5.13-3-SNAPSHOT</version>
+    <version>1.5.14-1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -74,6 +74,12 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mks.api</groupId>
+      <artifactId>mksapi-jar</artifactId>
+      <version>4.10.9049</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

@@ -33,6 +33,7 @@
     <awaitility.version>1.7.0</awaitility.version>
     <rest-assured.version>3.1.0</rest-assured.version>
     <arquillian-cube.version>1.16.0</arquillian-cube.version>
+    <arquillian-junit.version>1.4.0.Final</arquillian-junit.version>
     <junit.version>4.12</junit.version>
   </properties>
 
@@ -84,7 +85,12 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.12</version>
+        <version>${junit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.junit</groupId>
+        <artifactId>arquillian-junit-standalone</artifactId>
+        <version>${arquillian-junit.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -103,6 +109,12 @@
         <filtering>true</filtering>
       </resource>
     </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -126,6 +138,18 @@
           <execution>
             <goals>
               <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
             </goals>
           </execution>
         </executions>
@@ -161,6 +185,17 @@
             <configuration>
               <skip>${skip.fmp}</skip>
             </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>openshift-it</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
           </plugin>
         </plugins>
       </build>
