@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>io.openshift</groupId>
-		<artifactId>booster-parent</artifactId>
-		<version>22</version>
-	</parent>
+  <parent>
+    <groupId>io.openshift</groupId>
+    <artifactId>booster-parent</artifactId>
+    <version>22</version>
+  </parent>
 
-	<groupId>io.openshift.booster</groupId>
-	<artifactId>spring-boot-istio-routing-parent</artifactId>
-	<version>1.5.13-3-SNAPSHOT</version>
-	<packaging>pom</packaging>
+  <groupId>io.openshift.booster</groupId>
+  <artifactId>spring-boot-istio-routing-parent</artifactId>
+  <version>1.5.13-3-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
-	<properties>
-		<java.version>1.8</java.version>
+  <properties>
+    <java.version>1.8</java.version>
         <skip.fmp>true</skip.fmp>
-	  <arquillian.version>1.4.0.Final</arquillian.version>
+    <arquillian.version>1.4.0.Final</arquillian.version>
     <spring-boot-bom.version>1.5.13.Final</spring-boot-bom.version>
     <spring-boot.version>1.5.13.RELEASE</spring-boot.version>
     <awaitility.version>1.7.0</awaitility.version>
-    <rest-assured.version>2.9.0</rest-assured.version>
+    <rest-assured.version>3.1.0</rest-assured.version>
+    <arquillian-cube.version>1.16.0</arquillian-cube.version>
+    <junit.version>4.12</junit.version>
   </properties>
 
   <licenses>
@@ -49,16 +51,25 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>rest-assured</artifactId>
+        <version>${rest-assured.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.arquillian.cube</groupId>
+        <artifactId>arquillian-cube-istio-kubernetes</artifactId>
+        <version>${arquillian-cube.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
-    <dependency>
-      <groupId>com.jayway.restassured</groupId>
-      <artifactId>rest-assured</artifactId>
-      <version>${rest-assured.version}</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>com.jayway.awaitility</groupId>
       <artifactId>awaitility</artifactId>
@@ -72,37 +83,38 @@
     </dependency>
   </dependencies>
 
-	<modules>
-		<module>spring-boot-istio-routing-client</module>
-		<module>spring-boot-istio-routing-service-a</module>
-		<module>spring-boot-istio-routing-service-b</module>
-	</modules>
+  <modules>
+    <module>spring-boot-istio-routing-client</module>
+    <module>spring-boot-istio-routing-service-a</module>
+    <module>spring-boot-istio-routing-service-b</module>
+    <module>tests</module>
+  </modules>
 
-	<build>
+  <build>
     <testResources>
       <testResource>
         <directory>src/test/resources</directory>
         <filtering>true</filtering>
       </testResource>
     </testResources>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<profiles>
-						<profile>development</profile>
-					</profiles>
-				</configuration>
-			</plugin>
-		</plugins>
-	  <pluginManagement>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <profiles>
+            <profile>development</profile>
+          </profiles>
+        </configuration>
+      </plugin>
+    </plugins>
+    <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.springframework.boot</groupId>
@@ -136,30 +148,30 @@
   </build>
 
 
-	<profiles>		
-		<profile>
-			<id>openshift</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>io.fabric8</groupId>
-						<artifactId>fabric8-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<goals>
-									<goal>resource</goal>
-									<goal>build</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<skip>${skip.fmp}</skip>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
+  <profiles>
+    <profile>
+      <id>openshift</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>resource</goal>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <skip>${skip.fmp}</skip>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>openshift-it</id>
       <build>
         <plugins>
@@ -170,18 +182,18 @@
         </plugins>
       </build>
     </profile>
-	</profiles>
+  </profiles>
 
-	<repositories>
-		<repository>
-			<id>sonatype-snapshot</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-		</repository>
-		<repository>
-			<id>jboss-snapshots-repository</id>
-			<name>JBoss Snapshots Repository</name>
-			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
-		</repository>
-	</repositories>
+  <repositories>
+    <repository>
+      <id>sonatype-snapshot</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
+      <id>jboss-snapshots-repository</id>
+      <name>JBoss Snapshots Repository</name>
+      <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+  </repositories>
 
 </project>
