@@ -9,7 +9,10 @@ import org.arquillian.cube.istio.impl.IstioAssistant;
 import org.arquillian.cube.openshift.impl.client.OpenShiftAssistant;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
@@ -39,14 +42,21 @@ public class OpenshiftIT{
     @Before
     public void init() throws Exception {
         // get istio ingress route
-        Route route = openShiftAssistant.getClient().routes().inNamespace("istio-system").withName("istio-ingress").get();
+        Route route = openShiftAssistant.getClient()
+                .routes()
+                .inNamespace("istio-system")
+                .withName("istio-ingress")
+                .get();
         if (route == null){
             throw new Exception("Istio ingress route not found");
         }
         istioURL = "http://" + route.getSpec().getHost() + "/";
 
         clientRouteRule = deployRouteRule("client-route-rule.yml");
-        await().pollInterval(1, TimeUnit.SECONDS).atMost(1, TimeUnit.MINUTES).until(() -> {
+        await()
+                .pollInterval(1, TimeUnit.SECONDS)
+                .atMost(1, TimeUnit.MINUTES)
+                .until(() -> {
             try {
                 Response response = RestAssured.get(istioURL + appUrl);
                 return response.getStatusCode() == 200;
