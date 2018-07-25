@@ -11,10 +11,10 @@ public class DataController {
     	long started = System.currentTimeMillis();
     	try {
     		// Simulate a delay.
-			Thread.sleep((long) (Math.random() * 200));
-		} catch (InterruptedException e) {
-			// Carry on.
-		}
+  			Thread.sleep((long) (Math.random() * 200));
+  		} catch (InterruptedException e) {
+  			// Carry on.
+  		}
     	return "Hello from Service B! Operation completed in " + (System.currentTimeMillis() - started) + "ms.";
     }
 

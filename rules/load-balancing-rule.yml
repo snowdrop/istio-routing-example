@@ -1,15 +1,31 @@
-apiVersion: config.istio.io/v1alpha2
-kind: RouteRule
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
 metadata:
   name: spring-boot-istio-routing-service
 spec:
-  destination:
-    name: spring-boot-istio-routing-service
-  route:
-    - labels:
-        version: a
-      weight: 20
-    - labels:
-        version: b
+  host: spring-boot-istio-routing-service
+  subsets:
+  - name: a
+    labels:
+      version: a
+  - name: b
+    labels:
+      version: b
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: spring-boot-istio-routing-service
+spec:
+  hosts:
+  - spring-boot-istio-routing-service
+  http:
+  - route:
+    - destination:
+        host: spring-boot-istio-routing-service
+        subset: b
       weight: 80
-        
+    - destination:
+        host: spring-boot-istio-routing-service
+        subset: a
+      weight: 20
