@@ -5,7 +5,7 @@ Showcases Istio's dynamic routing capabilities with a minimal set of example app
 
 == Prerequisites
 . Openshift 3.9 cluster
-. Istio 0.7.1 installed on the aforementioned cluster. To install Istio simply follow one of the following docs:
+. Istio 0.8.0 installed on the aforementioned cluster. To install Istio simply follow one of the following docs:
 .. https://istio.io/docs/setup/kubernetes/quick-start.html
 .. https://istio.io/docs/setup/kubernetes/ansible-install.html
 . Enable automatic sidecar injection for Istio (See https://istio.io/docs/setup/kubernetes/sidecar-injection.html[this] for details)
@@ -66,14 +66,14 @@ oc new-app --template=spring-boot-istio-routing-booster-service-b -p SOURCE_REPO
 ```
 
 = Use Cases
-== Configure an ingress Route to access the application
+== Access the application via the Istio ingress-gateway
 
-. Create a RouteRule to forward traffic to the demo application.
+. Create a Gateway to forward traffic to the demo application.
 +
 This is only necessary if your application accepts traffic at a different port/url than the default. In this case, our application accepts traffic at `/`, but we will access it with the path `/example`.
 +
 ```bash
-oc apply -f rules/client-route-rule.yml
+oc apply -f rules/client-gateway-rule.yml -n $(oc project -q)
 ```
 
 . Access the application
@@ -81,10 +81,10 @@ oc apply -f rules/client-route-rule.yml
 Run the following command to determine the appropriate URL to access our demo. Make sure you access the url with the HTTP scheme. HTTPS is NOT enabled by default:
 +
 ```bash
-echo http://$(oc get route istio-ingress -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
+echo http://$(oc get route istio-ingressgateway -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/example/
 ```
 +
-The result of the above command is the istio-system istio-ingress URL, appended with the RouteRule path. Open this URL in your a web browser.
+The result of the above command is the istio-system istio-ingressgateway URL, appended with the Gateway path we defined above. Open this URL in your a web browser.
 
 == Transfer load between two versions of an application/service
 
@@ -92,8 +92,8 @@ The result of the above command is the istio-system istio-ingress URL, appended 
 .. Click "Invoke Service" in the client UI (Do this several times.)
 .. Notice that the services are load-balanced at exactly 50%, which is the default cluster behavior.
 
-. Configure a load-balancing RouteRule
-Sometimes it is important to slowly direct traffic to a new service over time, or use alternate weighting. In this case, we will supply another Istio RouteRule to control load balancing behavior.
+. Configure a VirtualService to enable weight-based version routing (load-balancing)
+Sometimes it is important to slowly direct traffic to a new service over time, or use alternate weighting. In this case, we will supply an Istio VirtualService to control load balancing behavior.
 +
 Run the following command:
 +
@@ -101,14 +101,14 @@ Run the following command:
 oc apply -f rules/load-balancing-rule.yml
 ```
 +
-The RouteRule defined in the file above uses labels "a" and "b" to identify each unique version of the service. If multiple services match any of these labels, traffic will be divided between them accordingly. Additional routes/weights can be supplied using additional labels/service versions as desired.
+The VirtualService defined in the file above uses labels "a" and "b" to identify each unique version of the service. If multiple services match any of these labels, traffic will be divided between them accordingly. Additional routes/weights can be supplied using additional labels/service versions as desired.
 . Click "Invoke Service" in the client UI
 +
 Do this several times. You will notice that traffic is no longer routed at 50/50%, and more traffic is directed to service version B than service version A. Adjust the weights in the rule-file and re-run the command above. You should see traffic adjust accordingly.
 +
-NOTE: It could take several seconds for the RouteRule to be detected and applied by Istio.
+NOTE: It could take several seconds for the VirtualService to be detected and applied by Istio.
 
-Congratulations! You now know how to direct traffic between different versions of a service using Istio RouteRules.
+Congratulations! You now know how to direct traffic between different versions of a service using Istio VirtualService.
 
 == Undeploy the application
 
