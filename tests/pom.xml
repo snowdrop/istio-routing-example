@@ -5,7 +5,7 @@
   <parent>
     <artifactId>spring-boot-istio-routing-parent</artifactId>
     <groupId>io.openshift.booster</groupId>
-    <version>1.5.14-1-SNAPSHOT</version>
+    <version>1.5.14-2-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -110,6 +110,27 @@
               <skip>false</skip>
               <profile>aggregate</profile>
             </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>copy-istio-resources</id>
+                <phase>process-test-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.basedir}/target/test-classes</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.basedir}/../rules</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
