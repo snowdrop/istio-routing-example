@@ -71,8 +71,8 @@ public class OpenshiftIT{
     @Test
     public void unequalLoadBalancingTest() throws Exception {
         additionalRouteRule = deployRouteRule("load-balancing-rule.yml");
-        waitUntilApplicationIsReady();
         Thread.sleep(10000); //sleep 10 sec to make rule take effect
+        waitUntilApplicationIsReady();
         expectLoadBalancingRatio(80, 10);
     }
 
@@ -114,6 +114,9 @@ public class OpenshiftIT{
                     .when()
                     .get(ingressGatewayURL + appUrl + dataUrlSuffix);
                tries++;
+               if (response.statusCode() != 200) {
+                   Thread.sleep(10); //wait for service to recover
+               }
             } while (response.statusCode() != 200 && tries <= 3);
 
             if (response.statusCode() != 200) {
