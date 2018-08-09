@@ -86,7 +86,7 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-        name: spring-boot-istio-routing-client:BOOSTER_VERSION
+        name: spring-boot-istio-routing-client:1.5.15-2
     postCommit: {}
     resources: {}
     source:
