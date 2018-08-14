@@ -13,24 +13,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.openshift.booster</groupId>
-      <artifactId>spring-boot-istio-routing-service-a</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>io.openshift.booster</groupId>
-      <artifactId>spring-boot-istio-routing-service-b</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>io.openshift.booster</groupId>
-      <artifactId>spring-boot-istio-routing-client</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.arquillian.cube</groupId>
       <artifactId>arquillian-cube-istio-kubernetes</artifactId>
       <scope>test</scope>
@@ -110,6 +92,30 @@
               <skip>false</skip>
               <profile>aggregate</profile>
             </configuration>
+            <!--
+               We add the dependencies to the two modules that need to be deployed for the tests
+               to run.
+               This is done in order to make FMP pick up the generated Openshift
+               resources file of each module and create an "uber" resources file containing
+               resources for both modules (which is what the aggregate profile above does)
+            -->
+            <dependencies>
+              <dependency>
+                <groupId>io.openshift.booster</groupId>
+                <artifactId>spring-boot-istio-routing-service-a</artifactId>
+                <version>${project.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>io.openshift.booster</groupId>
+                <artifactId>spring-boot-istio-routing-service-b</artifactId>
+                <version>${project.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>io.openshift.booster</groupId>
+                <artifactId>spring-boot-istio-routing-client</artifactId>
+                <version>${project.version}</version>
+              </dependency>
+            </dependencies>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
