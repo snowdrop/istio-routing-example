@@ -10,6 +10,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -19,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.junit.runners.MethodSorters;
 
 import static org.awaitility.Awaitility.await;
 
@@ -27,6 +29,9 @@ import static org.awaitility.Awaitility.await;
  */
 @RunWith(Arquillian.class)
 @IstioResource("classpath:client-gateway-rule.yml")
+// this is a stop gap solution until deletion of the custom resources works correctly
+// see https://github.com/snowdrop/istio-java-api/issues/31
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OpenshiftIT{
     private static final String ISTIO_NAMESPACE = "istio-system";
     private static final String ISTIO_INGRESS_GATEWAY_NAME = "istio-ingressgateway";
@@ -42,12 +47,13 @@ public class OpenshiftIT{
     private final String appUrl = "example/";
     private final String dataUrlSuffix = "request-data";
 
-    private List<me.snowdrop.istio.api.model.IstioResource> additionalRouteRule = null;
+    private static List<me.snowdrop.istio.api.model.IstioResource> additionalRouteRule = null;
 
     @After
-    public void cleanup(){
+    public void cleanup() throws InterruptedException {
         if (additionalRouteRule != null) {
             istioAssistant.undeployIstioResources(additionalRouteRule);
+            Thread.sleep(10000); //sleep 10 sec to ensure rule is removed
             additionalRouteRule = null;
         }
     }
