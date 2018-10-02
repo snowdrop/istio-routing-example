@@ -1,3 +1,5 @@
+apiVersion: v1
+kind: Deployment
 metadata:
   labels:
     version: b
@@ -14,10 +16,7 @@ spec:
         version: b
     spec:
       containers:
-      - image: spring-boot-istio-routing-service-b:latest
-        imagePullPolicy: Always
-        name: spring-boot
-        livenessProbe:
+      - livenessProbe:
           failureThreshold: 2
           initialDelaySeconds: 60
           periodSeconds: 3
@@ -25,8 +24,8 @@ spec:
           timeoutSeconds: 1
           exec:
             command:
-            - curl
-            - http://localhost:8080/health
+              - curl
+              - http://localhost:8080/health
         readinessProbe:
           failureThreshold: 3
           initialDelaySeconds: 10
@@ -35,14 +34,5 @@ spec:
           timeoutSeconds: 1
           exec:
             command:
-            - curl
-            - http://localhost:8080/health
-  triggers:
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - spring-boot
-      from:
-        kind: ImageStreamTag
-        name: spring-boot-istio-routing-service-b:latest
-    type: ImageChange
+              - curl
+              - http://localhost:8080/health
