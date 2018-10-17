@@ -47,7 +47,7 @@ public class OpenshiftIT{
     private final String appUrl = "example/";
     private final String dataUrlSuffix = "request-data";
 
-    private static List<me.snowdrop.istio.api.model.IstioResource> additionalRouteRule = null;
+    private static List<me.snowdrop.istio.api.IstioResource> additionalRouteRule = null;
 
     @After
     public void cleanup() throws InterruptedException {
@@ -82,7 +82,7 @@ public class OpenshiftIT{
         expectLoadBalancingRatio(80, 10);
     }
 
-    private List<me.snowdrop.istio.api.model.IstioResource> deployRouteRule(String routeRuleFile) throws IOException {
+    private List<me.snowdrop.istio.api.IstioResource> deployRouteRule(String routeRuleFile) throws IOException {
         return istioAssistant.deployIstioResources(
                 Files.newInputStream(Paths.get("../rules/" + routeRuleFile)));
     }
