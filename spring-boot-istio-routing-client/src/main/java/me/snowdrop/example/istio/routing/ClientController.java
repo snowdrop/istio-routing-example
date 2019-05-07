@@ -1,4 +1,4 @@
-package me.snowdrop.booster.istio.routing;
+package me.snowdrop.example.istio.routing;
 
 import java.net.URI;
 

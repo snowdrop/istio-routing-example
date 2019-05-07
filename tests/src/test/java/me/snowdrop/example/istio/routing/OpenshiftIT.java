@@ -1,4 +1,4 @@
-package me.snowdrop.booster.istio.routing;
+package me.snowdrop.example.istio.routing;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
