@@ -34,9 +34,9 @@ Run the following commands to apply and execute the OpenShift templates that wil
 ```bash
 find . | grep openshiftio | grep application | xargs -n 1 oc apply -f
 
-oc new-app --template=spring-boot-istio-routing-booster-client -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-routing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-client
-oc new-app --template=spring-boot-istio-routing-booster-service-a -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-routing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-service-a
-oc new-app --template=spring-boot-istio-routing-booster-service-b -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/spring-boot-istio-routing-booster -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-service-b
+oc new-app --template=istio-routing-example-client -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/istio-routing-example -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-client
+oc new-app --template=istio-routing-example-service-a -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/istio-routing-example -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-service-a
+oc new-app --template=istio-routing-example-service-b -p SOURCE_REPOSITORY_URL=https://github.com/snowdrop/istio-routing-example -p SOURCE_REPOSITORY_REF=master -p SOURCE_REPOSITORY_DIR=spring-boot-istio-routing-service-b
 ```
 
 = Use Cases
