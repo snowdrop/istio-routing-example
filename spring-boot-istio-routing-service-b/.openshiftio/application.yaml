@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: spring-boot-istio-routing-booster-service-b
+  name: istio-routing-example-service-b
   annotations:
     iconClass: icon-spring
     tags: spring-boot, routing, istio, java, microservice
     openshift.io/display-name: Spring Boot - Istio Routing
     openshift.io/provider-display-name: "Red Hat, Inc."
     description: >-
-      Spring Boot Istio booster - Service B
+      Spring Boot Istio example - Service B
 parameters:
 - name: RUNTIME_VERSION
   displayName: OpenJDK 8 image version to use
