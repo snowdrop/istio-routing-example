@@ -25,7 +25,7 @@ spec:
           exec:
             command:
               - curl
-              - http://localhost:8080/health
+              - http://localhost:8080/actuator/health
         readinessProbe:
           failureThreshold: 3
           initialDelaySeconds: 10
@@ -35,4 +35,4 @@ spec:
           exec:
             command:
               - curl
-              - http://localhost:8080/health
+              - http://localhost:8080/actuator/health
