@@ -7,7 +7,7 @@
   <parent>
     <groupId>dev.snowdrop.example</groupId>
     <artifactId>istio-routing</artifactId>
-    <version>2.1.10-1-SNAPSHOT</version>
+    <version>2.1.10-1</version>
   </parent>
 
   <artifactId>spring-boot-istio-routing-client</artifactId>
